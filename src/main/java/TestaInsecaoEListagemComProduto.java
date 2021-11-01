@@ -2,16 +2,17 @@ import dao.ProdutoDAO;
 import modelo.Produto;
 
 import java.sql.*;
+import java.util.List;
 
-public class TestaInsecaoComProduto {
+public class TestaInsecaoEListagemComProduto {
     public static void main(String[] args) throws SQLException {
         Produto comoda = new Produto("Cômoda", "Cômoda Vertical");
 
         try(Connection connection = new ConnectionFactory().recuperarConexao()){
             ProdutoDAO produtoDAO = new ProdutoDAO(connection);
             produtoDAO.salvar(comoda);
-            //Lista = persistenciaProduto.listar();
+            List<Produto> listaDeProdutos = produtoDAO.listar();
+            listaDeProdutos.stream().forEach(lp -> System.out.println(lp));
         }
-        System.out.println(comoda);
     }
 }
